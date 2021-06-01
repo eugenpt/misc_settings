@@ -39,7 +39,7 @@ map <Space> <Leader>
 " \l       : list buffers
 " \b \f \g : go back/forward/last-used
 " \1 \2 \3 : go to buffer 1/2/3 etc
-nnoremap <Leader>l :ls<CR>
+nnoremap <Leader>l :ls<CR>:b
 nnoremap <Leader>b :bp<CR>
 nnoremap <Leader>f :bn<CR>
 nnoremap <Leader>g :e#<CR>
@@ -64,7 +64,7 @@ function! EchoWarning(msg)
   echon ': ' a:msg
 endfunction
 
-call EchoWarning('test')
+" call EchoWarning('test')
 
 function! CloseIfNotSaved()
     if &mod
@@ -105,6 +105,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-python/python-syntax'
 
 Plug 'sheerun/vim-polyglot'
+
+Plug 'preservim/nerdcommenter'
 
 call plug#end()
 
