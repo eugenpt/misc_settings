@@ -107,10 +107,24 @@ Plug 'vim-python/python-syntax'
 Plug 'sheerun/vim-polyglot'
 
 Plug 'preservim/nerdcommenter'
-
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 nnoremap <C-p> :GFiles<CR>
 
 " set colorscheme=nirvana
+
+let g:NERDSpaceDelims = 1
+
+
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>w <Plug>(easymotion-w)
+map <Leader>b <Plug>(easymotion-b)
+
+map <Leader>W <Plug>(easymotion-W)
+map <Leader>B <Plug>(easymotion-B)
+
+
+nmap s <Plug>(easymotion-overwin-f)
 
