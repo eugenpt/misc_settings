@@ -41,7 +41,7 @@ map <Space> <Leader>
 " \l       : list buffers
 " \b \f \g : go back/forward/last-used
 " \1 \2 \3 : go to buffer 1/2/3 etc
-nnoremap <Leader>l :ls<CR>:b
+nnoremap <Leader>l :ls<CR>:b<Space>
 nnoremap <Leader>b :bp<CR>
 nnoremap <Leader>f :bn<CR>
 nnoremap <Leader>g :e#<CR>
@@ -54,10 +54,17 @@ nnoremap <Leader>6 :6b<CR>
 nnoremap <Leader>7 :7b<CR>
 nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
+noremap <Leader>0 :10b<CR>
 " It's useful to show the buffer number in the status line.
 set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
+" move between tabs as in Vimium (!) =)
+"  but first remap man to M
+nnoremap M K
+nnoremap J gT
+nnoremap K gt
+" and also - :close shortcut
+nnoremap <Leader>c :close<CR>
 
 function! EchoWarning(msg)
   echohl WarningMsg
