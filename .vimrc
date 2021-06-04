@@ -5,6 +5,8 @@ inoremap kj <ESC>
 " https://superuser.com/a/1321520
 nnoremap <C-j> :bprev<CR>                                                                            
 nnoremap <C-k> :bnext<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 nnoremap <Leader>q :bnext<CR>:bd#<CR>
 
@@ -125,6 +127,20 @@ map <Leader>b <Plug>(easymotion-b)
 map <Leader>W <Plug>(easymotion-W)
 map <Leader>B <Plug>(easymotion-B)
 
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+" nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 nmap s <Plug>(easymotion-overwin-f)
-
+" imap <C-w> <Esc><C-w>
