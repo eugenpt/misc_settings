@@ -117,7 +117,13 @@ Plug 'sheerun/vim-polyglot'
 
 Plug 'preservim/nerdcommenter'
 Plug 'easymotion/vim-easymotion'
+Plug 'morhetz/gruvbox'
+
+
 call plug#end()
+
+colorscheme gruvbox
+set background=dark
 
 nnoremap <C-p> :GFiles<CR>
 
@@ -150,4 +156,15 @@ map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 nmap s <Plug>(easymotion-overwin-f)
+vmap s <Plug>(easymotion-overwin-f)
 " imap <C-w> <Esc><C-w>
+
+
+
+
+
+
+
+
+
+" 
