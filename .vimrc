@@ -128,3 +128,7 @@ map <Leader>B <Plug>(easymotion-B)
 
 nmap s <Plug>(easymotion-overwin-f)
 
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
+
+
