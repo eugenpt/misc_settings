@@ -5,6 +5,8 @@ inoremap kj <ESC>
 " https://superuser.com/a/1321520
 nnoremap <C-j> :bprev<CR>                                                                            
 nnoremap <C-k> :bnext<CR>
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 nnoremap <Leader>q :bnext<CR>:bd#<CR>
 
@@ -39,7 +41,7 @@ map <Space> <Leader>
 " \l       : list buffers
 " \b \f \g : go back/forward/last-used
 " \1 \2 \3 : go to buffer 1/2/3 etc
-nnoremap <Leader>l :ls<CR>:b
+nnoremap <Leader>l :ls<CR>:b<Space>
 nnoremap <Leader>b :bp<CR>
 nnoremap <Leader>f :bn<CR>
 nnoremap <Leader>g :e#<CR>
@@ -52,10 +54,17 @@ nnoremap <Leader>6 :6b<CR>
 nnoremap <Leader>7 :7b<CR>
 nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
+noremap <Leader>0 :10b<CR>
 " It's useful to show the buffer number in the status line.
 set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
+" move between tabs as in Vimium (!) =)
+"  but first remap man to M
+nnoremap M K
+nnoremap J gT
+nnoremap K gt
+" and also - :close shortcut
+nnoremap <Leader>c :close<CR>
 
 function! EchoWarning(msg)
   echohl WarningMsg
@@ -108,7 +117,13 @@ Plug 'sheerun/vim-polyglot'
 
 Plug 'preservim/nerdcommenter'
 Plug 'easymotion/vim-easymotion'
+Plug 'morhetz/gruvbox'
+
+
 call plug#end()
+
+colorscheme gruvbox
+set background=dark
 
 nnoremap <C-p> :GFiles<CR>
 
@@ -125,10 +140,32 @@ map <Leader>b <Plug>(easymotion-b)
 map <Leader>W <Plug>(easymotion-W)
 map <Leader>B <Plug>(easymotion-B)
 
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+" nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 nmap s <Plug>(easymotion-overwin-f)
+vmap s <Plug>(easymotion-overwin-f)
+" imap <C-w> <Esc><C-w>
+
+
+
+
+
+
+
+
 
 nmap <C-h> <C-w>h
 nmap <C-l> <C-w>l
-
-
