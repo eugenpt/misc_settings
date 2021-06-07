@@ -122,7 +122,7 @@ Plug 'morhetz/gruvbox'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 
 Plug 'scrooloose/nerdcommenter'
@@ -214,4 +214,14 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+
+nmap * *zz
+nmap n nzz
+nmap N Nzz
+
+
+
+imap <Backspace> <nop>
+
+
 
