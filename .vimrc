@@ -223,5 +223,7 @@ nmap N Nzz
 
 imap <Backspace> <nop>
 
+set hls
+set incsearch
 
 
