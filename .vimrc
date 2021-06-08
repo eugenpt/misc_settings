@@ -115,9 +115,33 @@ Plug 'vim-python/python-syntax'
 
 Plug 'sheerun/vim-polyglot'
 
-Plug 'preservim/nerdcommenter'
 Plug 'easymotion/vim-easymotion'
 Plug 'morhetz/gruvbox'
+
+" https://habr.com/ru/post/486948/
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'preservim/nerdtree'
+
+Plug 'scrooloose/nerdcommenter'
+
+
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'airblade/vim-gitgutter'
+Plug 'ryanoasis/vim-devicons'
+
+Plug 'itchyny/lightline.vim'
+
+
+
+" Проверка Синтаксиса
+Plug 'scrooloose/syntastic' 
+" Плагин автозавершения
+"Plug 'Valloric/YouCompleteMe'
+" Поддержка Python
+"Plug 'klen/python-mode
 
 
 call plug#end()
@@ -160,11 +184,44 @@ nmap s <Plug>(easymotion-overwin-f2)
 " imap <C-w> <Esc><C-w>
 
 
+nmap <C-h> <C-w>h
+" nmap <C-l> <C-w>l
 
 
 
+" Делаем линейку для отображения на какой мы строке и сколько расстояния до
+" других строк в **NeoVim**
+set number
+set ruler
 
 
 
+" В нормальном режиме Ctrl+n вызывает :NERDTree
+nmap <C-n> :NERDTreeToggle<CR>
+vmap ++ <plug>NERDCommenterToggle
+nmap ++ <plug>NERDCommenterToggle
 
-" 
+" Линия статуса: конфигурация
+set noshowmode " Табличка --INSERT-- больше не выводится на экран
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'iceberg',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+nmap * *zz
+nmap n nzz
+nmap N Nzz
+
+
+
+imap <Backspace> <nop>
+
+
+
