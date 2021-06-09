@@ -179,8 +179,8 @@ nmap <Leader>L <Plug>(easymotion-overwin-line)
 map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 
-nmap s <Plug>(easymotion-overwin-f)
-vmap s <Plug>(easymotion-overwin-f)
+nmap s <Plug>(easymotion-overwin-f2)
+
 " imap <C-w> <Esc><C-w>
 
 
@@ -223,5 +223,7 @@ nmap N Nzz
 
 imap <Backspace> <nop>
 
+set hls
+set incsearch
 
 
