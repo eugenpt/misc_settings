@@ -119,6 +119,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'morhetz/gruvbox'
 
 " https://habr.com/ru/post/486948/
+Plug 'itchyny/vim-gitbranch'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
@@ -183,24 +184,17 @@ nmap s <Plug>(easymotion-overwin-f2)
 
 " imap <C-w> <Esc><C-w>
 
-
-nmap <C-h> <C-w>h
-" nmap <C-l> <C-w>l
-
-
-
 " Делаем линейку для отображения на какой мы строке и сколько расстояния до
 " других строк в **NeoVim**
 set number
 set ruler
-
-
 
 " В нормальном режиме Ctrl+n вызывает :NERDTree
 nmap <C-n> :NERDTreeToggle<CR>
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
 
+" set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " Линия статуса: конфигурация
 set noshowmode " Табличка --INSERT-- больше не выводится на экран
 set laststatus=2
@@ -210,20 +204,27 @@ let g:lightline = {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
+      \ 'component': {
+      \   'filename': '%n:%t'
+      \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'gitbranch#name'
       \ },
       \ }
 
+" Always show search result in the middle of the screen
 nmap * *zz
 nmap n nzz
 nmap N Nzz
 
 
-
+" Yep, no backspace on my watch
 imap <Backspace> <nop>
 
+" highlight search results + while typing
 set hls
 set incsearch
+
+
 
 
