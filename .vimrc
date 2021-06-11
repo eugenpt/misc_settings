@@ -225,6 +225,17 @@ imap <Backspace> <nop>
 set hls
 set incsearch
 
-
+    " In insert or command mode, move normally by using Ctrl
+" inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+inoremap <C-0> <ESC>0i
+inoremap <C--> <ESC>_i
+inoremap <C-4> <ESC>$i
+cnoremap <C-h> <Left>
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-l> <Right>
 
 
