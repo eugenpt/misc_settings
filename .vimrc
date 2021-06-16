@@ -232,7 +232,7 @@ inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap <C-0> <ESC>0i
 inoremap <C--> <ESC>_i
-inoremap <C-4> <ESC>$i
+inoremap <C-4> <ESC>$li
 " cnoremap <C-h> <Left> " WHY would anyone do that ??!!
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
