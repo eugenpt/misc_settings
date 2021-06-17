@@ -272,6 +272,38 @@ ep_switchDesktopToTarget(targetDesktop)
 Send, !{F4}
 return
 
+^F12:: 
+    { 
+        Send, ^c 
+        Sleep 50 
+        Run, https://www.google.com/search?q=%clipboard% 
+        Return 
+    } 
+
+^F11:: 
+{ 
+	Send, ^c 
+	Sleep 50 
+	Run, https://en.wikipedia.org/wiki/%clipboard%	 
+	Return 
+} 
+
+#C::
+Send, ^C
+return
+
+#V::
+Send, ^V
+return
+
+#X::
+Send, ^X
+return
+
+#A::
+Send, ^A
+return
+
 ^#Q::
 CoordMode, Mouse, Screen
 MouseGetPos, xpos, ypos 
