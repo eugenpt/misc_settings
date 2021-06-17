@@ -268,6 +268,9 @@ ep_switchDesktopToTarget(targetDesktop)
 
 ; ======================================================================================
 
+#W::
+Send, !{F4}
+return
 
 ^#Q::
 CoordMode, Mouse, Screen
@@ -374,9 +377,9 @@ return
 
 ; User config!
 ; This section binds the key combo to the switch/create/delete actions
-^!1::_switchDesktopToTarget(1)
-^!2::_switchDesktopToTarget(2)
-^!3::_switchDesktopToTarget(3)
+^!1::switchDesktopByNumber(1)
+^!2::switchDesktopByNumber(2)
+^!3::switchDesktopByNumber(3)
 ^!4::switchDesktopByNumber(4)
 ^!5::switchDesktopByNumber(5)
 ^!6::switchDesktopByNumber(6)
