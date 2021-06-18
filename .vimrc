@@ -3,8 +3,8 @@ inoremap jk <ESC>
 inoremap kj <ESC>
 
 " https://superuser.com/a/1321520
-nnoremap <C-j> :bprev<CR>                                                                            
-nnoremap <C-k> :bnext<CR>
+nnoremap <silent> <C-j> :bprev<CR>                                                                            
+nnoremap <silent> <C-k> :bnext<CR>
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
@@ -229,17 +229,20 @@ imap <Backspace> <nop>
 set hls
 set incsearch
 
-    " In insert or command mode, move normally by using Ctrl
+" In insert or command mode, move normally by using Ctrl
 " inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap <C-0> <ESC>0i
-inoremap <C--> <ESC>_i
-inoremap <C-4> <ESC>$i
-" cnoremap <C-h> <Left>
+inoremap <C--> <ESC>_i 
+inoremap <C-4> <ESC>A
+"  noremap <C-h> <Left> " WHY would anyone do that ??!!
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
 
+nnoremap <space><space> :nohlsearch<CR>
 
+
+set pyx=3
