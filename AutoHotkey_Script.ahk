@@ -435,3 +435,9 @@ return
 ;^!c::createVirtualDesktop()
 ;^!d::deleteVirtualDesktop()
 
+
+^!Esc::
+MsgBox, "Exiting EP's AHK script"
+ExitApp
+return
+
