@@ -239,3 +239,7 @@ cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
 
 nnoremap <space><space> :nohlsearch<CR>
+
+
+
+set pyx=3

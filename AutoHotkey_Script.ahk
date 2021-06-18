@@ -288,21 +288,6 @@ return
 	Return 
 } 
 
-#C::
-Send, ^C
-return
-
-#V::
-Send, ^V
-return
-
-#X::
-Send, ^X
-return
-
-#A::
-Send, ^A
-return
 
 ^#Q::
 CoordMode, Mouse, Screen
