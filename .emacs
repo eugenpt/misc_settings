@@ -3,6 +3,15 @@
 ;; (require 'simpleclip)
 ;; (simpleclip-mode 1)
 
+;; mkdir ~/.emacs.d/plugins
+;; cd ~/.emacs.d/plugins
+;; git clone git@github.com:rolandwalker/simpleclip.git
+;; ln -s ./simpleclip/simpleclip.el ./
+;; git clone git@github.com:technomancy/better-defaults.git
+;; ln -s ./better-defaults/better-defaults.el ./
+
+
+
 (require 'better-defaults)
 
 
@@ -15,30 +24,35 @@
 
 
 
-;; Installs packages
+;; installs packages
 ;;
-;; myPackages contains a list of package names
+;; mypackages contains a list of package names
 (defvar myPackages
-  '(better-defaults                 ;; Set up some better Emacs defaults
+  '(better-defaults                 ;; set up some better emacs defaults
     elpy
     ein
     telega
     flycheck
-    py-autopep8                     ;; Run autopep8 on save
-    blacken                         ;; Black formatting on save
+    py-autopep8                     ;; run autopep8 on save
+    blacken                         ;; black formatting on save
     ssh-agency
     magit
-    material-theme                  ;; Theme
+    material-theme                  ;; theme
     )
   )
 
-;; Scans the list in myPackages
-;; If the package listed is not already installed, install it
-(mapc #'(lambda (package)
-          (unless (package-installed-p package)
-            (package-install package)))
-      myPackages)
+;; scans the list in mypackages
+;; if the package listed is not already installed, install it
+;; (mapc (lambda (tp)
+;;           (or (package-installed-p tp)
+;;             (package-install tp)))
+;;       mypackages)
 
+
+  
+
+
+(mapc   (lambda (x) (package-install x) ) myPackages)
 
 (package-initialize)
 

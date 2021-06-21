@@ -56,7 +56,7 @@ nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
 noremap <Leader>0 :10b<CR>
 " It's useful to show the buffer number in the status line.
-set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+" set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
 " move between tabs as in Vimium (!) =)
 "  but first remap man to M
@@ -134,6 +134,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 
 Plug 'itchyny/lightline.vim'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 
 
@@ -146,6 +148,7 @@ Plug 'scrooloose/syntastic'
 
 
 call plug#end()
+
 
 colorscheme gruvbox
 set background=dark
@@ -198,6 +201,7 @@ nmap ++ <plug>NERDCommenterToggle
 " Линия статуса: конфигурация
 set noshowmode " Табличка --INSERT-- больше не выводится на экран
 set laststatus=2
+
 let g:lightline = {
       \ 'colorscheme': 'iceberg',
       \ 'active': {
@@ -225,21 +229,20 @@ imap <Backspace> <nop>
 set hls
 set incsearch
 
-    " In insert or command mode, move normally by using Ctrl
+" In insert or command mode, move normally by using Ctrl
 " inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap <C-0> <ESC>0i
-inoremap <C--> <ESC>_i
-inoremap <C-4> <ESC>$li
-" cnoremap <C-h> <Left> " WHY would anyone do that ??!!
+inoremap <C--> <ESC>_i 
+inoremap <C-4> <ESC>A
+"  noremap <C-h> <Left> " WHY would anyone do that ??!!
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
 
 nnoremap <space><space> :nohlsearch<CR>
-
 
 
 set pyx=3
