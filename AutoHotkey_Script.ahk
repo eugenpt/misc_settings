@@ -332,12 +332,12 @@ return
 
 ; COmmented since it works slower than PowerToys remap (dunno why)
 ; #J::
-Send {LWin down}{LCtrl down}{Left down}{LWin up}{LCtrl up}{Left up}
-return
+; Send {LWin down}{LCtrl down}{Left down}{LWin up}{LCtrl up}{Left up}
+; return
 
 ; #K::
-Send {LWin down}{LCtrl down}{Right down}{LWin up}{LCtrl up}{Right up}
-return
+; Send {LWin down}{LCtrl down}{Right down}{LWin up}{LCtrl up}{Right up}
+; return
 
 
 ; Shift-Win kinda works, but when Shift is Down, it is like Shift-Click, so Ctrl is better
@@ -435,6 +435,7 @@ GoToNextDesktop() {
 }
 
 GoToDesktopNumber(num) {
+    global CurrentDesktop
  ;         MsgBox, "Going to %num%"
 	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc, IsPinnedWindowProc, activeWindowByDesktop
 
@@ -453,7 +454,23 @@ GoToDesktopNumber(num) {
 
 	; Change desktop
 	DllCall(GoToDesktopNumberProc, Int, num)
+
+    CurrentDesktop = num
+
+        ApplyIcon(num)
+
 	return
+}
+
+global ep_temp
+ApplyIcon(num) {
+
+        ; MsgBox, "apply icon, num=%num%"
+        ep_temp := num+1
+        Menu, Tray, Icon, Icons/%ep_temp%-64.ico
+;        Menu, Tray, Icon, Icons/icon%ep_temp%-Black.ico
+;        Menu, Tray, Icon, Icons/icon%ep_temp%.ico
+
 }
 
 ; Windows 10 desktop changes listener
@@ -463,7 +480,9 @@ VWMess(wParam, lParam, msg, hwnd) {
 
 	desktopNumber := lParam + 1
 	
-	; Try to restore active window from memory (if it's still on the desktop and is not pinned)
+        MsgBox, "On %desktopNumber%"
+
+        ; Try to restore active window from memory (if it's still on the desktop and is not pinned)
 	WinGet, activeHwnd, ID, A 
 	isPinned := DllCall(IsPinnedWindowProc, UInt, activeHwnd)
 	oldHwnd := activeWindowByDesktop[lParam]
@@ -471,9 +490,8 @@ VWMess(wParam, lParam, msg, hwnd) {
 	if (isOnDesktop == 1 && isPinned != 1) {
 		WinActivate, ahk_id %oldHwnd%
 	}
-        MsgBox, "On %desktopNumber%"
 
-	Menu, Tray, Icon, Icons/icon%desktopNumber%.ico
+        ApplyIcon(desktopNumber)
 	
 	; When switching to desktop 1, set background pluto.jpg
 	; if (lParam == 0) {
@@ -490,6 +508,28 @@ VWMess(wParam, lParam, msg, hwnd) {
 	; }
 }
 OnMessage(0x1400 + 30, "VWMess")
+
+ToggleIcon(delta){
+        global CurrentDesktop
+
+        ; MsgBox, "ToggleIcon: current=%CurrentDesktop%"
+        CurrentDesktop := CurrentDesktop + delta
+    if (CurrentDesktop >  9 ) {
+        CurrentDesktop := 9
+    }
+    if ( CurrentDesktop < 0 ) {
+        CurrentDesktop := 0
+    }
+        ; MsgBox, "ep_temp=%CurrentDesktop%"
+        ApplyIcon(CurrentDesktop)        
+}
+
+; #j::GoToPrevDesktop()
+; #k::GoToNextDesktop()
+~#^Left::ToggleIcon(-1)
+~#^Right::ToggleIcon(1)
+
+
 
 ; Switching desktops:
 ; Win + Ctrl + 1 = Switch to desktop 1
