@@ -1,10 +1,10 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/")
 
-(require 'simpleclip)
+;; (require 'simpleclip)
+;; (simpleclip-mode 1)
 
 (require 'better-defaults)
 
-(simpleclip-mode 1)
 
 (setq org-log-done 'time)
 
