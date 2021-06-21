@@ -330,21 +330,18 @@ return
 CapsLock::LCtrl
 return
 
-#J::
+; COmmented since it works slower than PowerToys remap (dunno why)
+; #J::
 Send {LWin down}{LCtrl down}{Left down}{LWin up}{LCtrl up}{Left up}
 return
 
-#K::
+; #K::
 Send {LWin down}{LCtrl down}{Right down}{LWin up}{LCtrl up}{Right up}
 return
 
-+#Q::
-mapDesktopsFromRegistry()
-MsgBox, [loading] desktops: %DesktopCount% current: %CurrentDesktop%
-return
 
-; Shift-Win kinda works, but since Shift is Down, 
-
+; Shift-Win kinda works, but when Shift is Down, it is like Shift-Click, so Ctrl is better
+;  <Mickey Rourke voice>Ай толд йу, Контрол из беттер.</>
 ^#1::ep_open_taskBar(11)
 ^#2::ep_open_taskBar(12)
 ^#3::ep_open_taskBar(13)
