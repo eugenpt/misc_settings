@@ -458,7 +458,6 @@ GoToDesktopNumber(num) {
 
 ; Windows 10 desktop changes listener
 DllCall(RegisterPostMessageHookProc, Int, hwnd, Int, 0x1400 + 30)
-OnMessage(0x1400 + 30, "VWMess")
 VWMess(wParam, lParam, msg, hwnd) {
 	global IsWindowOnCurrentVirtualDesktopProc, IsPinnedWindowProc, activeWindowByDesktop
 
@@ -474,7 +473,7 @@ VWMess(wParam, lParam, msg, hwnd) {
 	}
         MsgBox, "On %desktopNumber%"
 
-	; Menu, Tray, Icon, Icons/icon%desktopNumber%.ico
+	Menu, Tray, Icon, Icons/icon%desktopNumber%.ico
 	
 	; When switching to desktop 1, set background pluto.jpg
 	; if (lParam == 0) {
@@ -490,6 +489,7 @@ VWMess(wParam, lParam, msg, hwnd) {
 		; DllCall("SystemParametersInfo", UInt, 0x14, UInt, 0, Str, "C:\Users\Jarppa\Pictures\Backgrounds\DeskWork.png", UInt, 1)
 	; }
 }
+OnMessage(0x1400 + 30, "VWMess")
 
 ; Switching desktops:
 ; Win + Ctrl + 1 = Switch to desktop 1
@@ -503,3 +503,14 @@ VWMess(wParam, lParam, msg, hwnd) {
 ^!8::GoToDesktopNumber(7)
 ^!9::GoToDesktopNumber(8)
 ^!0::GoToDesktopNumber(9)
+
+!#1::dllMoveCurrentWindowToDesktop(0)
+!#2::dllMoveCurrentWindowToDesktop(1)
+!#3::dllMoveCurrentWindowToDesktop(2)
+!#4::dllMoveCurrentWindowToDesktop(3)
+!#5::dllMoveCurrentWindowToDesktop(4)
+!#6::dllMoveCurrentWindowToDesktop(5)
+!#7::dllMoveCurrentWindowToDesktop(6)
+!#8::dllMoveCurrentWindowToDesktop(7)
+!#9::dllMoveCurrentWindowToDesktop(8)
+!#0::dllMoveCurrentWindowToDesktop(9)
