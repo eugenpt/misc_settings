@@ -416,7 +416,7 @@ GoToPrevDesktop() {
 	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc
 	current := DllCall(GetCurrentDesktopNumberProc, UInt)
 	if (current = 0) {
-		GoToDesktopNumber(7)
+		GoToDesktopNumber(9)
 	} else {
 		GoToDesktopNumber(current - 1)      
 	}
@@ -455,7 +455,7 @@ GoToDesktopNumber(num) {
 	; Change desktop
 	DllCall(GoToDesktopNumberProc, Int, num)
 
-    CurrentDesktop = num
+    CurrentDesktop := num
 
         ApplyIcon(num)
 
