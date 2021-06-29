@@ -1,5 +1,8 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/")
 
+;; (require 'simpleclip)
+;; (simpleclip-mode 1)
+
 ;; mkdir ~/.emacs.d/plugins
 ;; cd ~/.emacs.d/plugins
 ;; git clone git@github.com:rolandwalker/simpleclip.git
@@ -10,10 +13,8 @@
 
 
 (require 'simpleclip) 
-  
 (require 'better-defaults)
 
-(simpleclip-mode 1)
 
 (setq org-log-done 'time)
 
@@ -39,9 +40,13 @@
     ssh-agency
     magit
     material-theme                  ;; theme
+    company-irony
+    web-mode
+    evil
     )
   )
 
+(eval-after-load 'company '(add-to-list 'company-backends 'company-irony))
 ;; scans the list in mypackages
 ;; if the package listed is not already installed, install it
 ;; (mapc (lambda (tp)
@@ -72,11 +77,11 @@
 (elpy-enable)
 
 ;; Use IPython for REPL
-(setq python-shell-interpreter "jupyter"
-      python-shell-interpreter-args "console --simple-prompt"
-      python-shell-prompt-detect-failure-warning nil)
-(add-to-list 'python-shell-completion-native-disabled-interpreters
-             "jupyter")
+; (setq python-shell-interpreter "jupyter"
+;       python-shell-interpreter-args "console --simple-prompt"
+;       python-shell-prompt-detect-failure-warning nil)
+; (add-to-list 'python-shell-completion-native-disabled-interpreters
+;              "jupyter")
 
 ;; Enable Flycheck
 (when (require 'flycheck nil t)
@@ -86,6 +91,18 @@
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
+;; https://github.com/osv/company-web
+(require 'web-mode)
+(require 'company)                                   ; load company mode
+(require 'company-web-html)                          ; load company mode html backend
+;; and/or
+(require 'company-web-jade)                          ; load company mode jade backend
+(require 'company-web-slim)                          ; load company mode slim backend
+
+;; you may key bind, for example for web-mode:
+(define-key web-mode-map (kbd "C-'") 'company-web-html)
+
+
 
 ;; (setq-default indent-tabs-mode nil)
 ;; (setq-default tab-width 2)
@@ -93,3 +110,5 @@
 
 
 
+(require 'evil)
+(evil-mode 0)

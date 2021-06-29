@@ -9,10 +9,33 @@ DesktopCount := 2        ; Windows starts with 2 desktops at boot
 CurrentDesktop := 1      ; Desktop count is 1-indexed (Microsoft numbers them this way)
 LastOpenedDesktop := 1
 
-; DLL
-hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", A_ScriptDir . "\VirtualDesktopAccessor.dll", "Ptr")
-global IsWindowOnDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "IsWindowOnDesktopNumber", "Ptr")
-global MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "MoveWindowToDesktopNumber", "Ptr")
+
+
+DetectHiddenWindows, On
+hwnd:=WinExist("ahk_pid " . DllCall("GetCurrentProcessId","Uint"))
+hwnd+=0x1000<<32
+
+hVirtualDesktopAccessor := DllCall("LoadLibrary", Str, "G:\work\Git\misc_settings\VirtualDesktopAccessor.dll", "Ptr") 
+GoToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GoToDesktopNumber", "Ptr")
+GetCurrentDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetCurrentDesktopNumber", "Ptr")
+IsWindowOnCurrentVirtualDesktopProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "IsWindowOnCurrentVirtualDesktop", "Ptr")
+MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "MoveWindowToDesktopNumber", "Ptr")
+RegisterPostMessageHookProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "RegisterPostMessageHook", "Ptr")
+UnregisterPostMessageHookProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "UnregisterPostMessageHook", "Ptr")
+IsPinnedWindowProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "IsPinnedWindow", "Ptr")
+RestartVirtualDesktopAccessorProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "RestartVirtualDesktopAccessor", "Ptr")
+; GetWindowDesktopNumberProc := DllCall("GetProcAddress", Ptr, hVirtualDesktopAccessor, AStr, "GetWindowDesktopNumber", "Ptr")
+activeWindowByDesktop := {}
+
+; Restart the virtual desktop accessor when Explorer.exe crashes, or restarts (e.g. when coming from fullscreen game)
+explorerRestartMsg := DllCall("user32\RegisterWindowMessage", "Str", "TaskbarCreated")
+OnMessage(explorerRestartMsg, "OnExplorerRestart")
+OnExplorerRestart(wParam, lParam, msg, hwnd) {
+    global RestartVirtualDesktopAccessorProc
+    DllCall(RestartVirtualDesktopAccessorProc, UInt, result)
+}
+
+
 
 ; Main
 SetKeyDelay, 75
@@ -264,6 +287,15 @@ ep_switchDesktopToTarget(targetDesktop)
     }
 }
 
+ep_open_taskBar(number){
+	CoordMode, Mouse, Screen
+	MouseGetPos, xpos, ypos 
+	MouseMove, 94 + 62*number , 1416, 0
+	Click
+	MouseMove, %xpos%, %ypos%, 0
+		
+}
+
 
 
 ; ======================================================================================
@@ -298,111 +330,41 @@ return
 CapsLock::LCtrl
 return
 
-#J::
-Send {LWin down}{LCtrl down}{Left down}{LWin up}{LCtrl up}{Left up}
-return
+; COmmented since it works slower than PowerToys remap (dunno why)
+; #J::
+; Send {LWin down}{LCtrl down}{Left down}{LWin up}{LCtrl up}{Left up}
+; return
 
-#K::
-Send {LWin down}{LCtrl down}{Right down}{LWin up}{LCtrl up}{Right up}
-return
+; #K::
+; Send {LWin down}{LCtrl down}{Right down}{LWin up}{LCtrl up}{Right up}
+; return
 
-+#Q::
-mapDesktopsFromRegistry()
-MsgBox, [loading] desktops: %DesktopCount% current: %CurrentDesktop%
-return
 
-^#1::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 772 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#2::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 833 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#3::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 893 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#4::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 953 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#5::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 1013 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#6::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 1073 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#7::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 1133 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#8::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 1193 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#9::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 1253 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
-
-^#0::
-CoordMode, Mouse, Screen
-MouseGetPos, xpos, ypos 
-MouseMove, 1313 , 1408, 0
-Click
-MouseMove, %xpos%, %ypos%, 0
-return
+; Shift-Win kinda works, but when Shift is Down, it is like Shift-Click, so Ctrl is better
+;  <Mickey Rourke voice>Ай толд йу, Контрол из беттер.</>
+^#1::ep_open_taskBar(11)
+^#2::ep_open_taskBar(12)
+^#3::ep_open_taskBar(13)
+^#4::ep_open_taskBar(14)
+^#5::ep_open_taskBar(15)
+^#6::ep_open_taskBar(16)
+^#7::ep_open_taskBar(17)
+^#8::ep_open_taskBar(18)
+^#9::ep_open_taskBar(19)
+^#0::ep_open_taskBar(20)
 
 
 ; User config!
 ; This section binds the key combo to the switch/create/delete actions
-^!1::switchDesktopByNumber(1)
-^!2::switchDesktopByNumber(2)
-^!3::switchDesktopByNumber(3)
-^!4::switchDesktopByNumber(4)
-^!5::switchDesktopByNumber(5)
-^!6::switchDesktopByNumber(6)
-^!7::switchDesktopByNumber(7)
-^!8::switchDesktopByNumber(8)
-^!9::switchDesktopByNumber(9)
+; ^!#1::switchDesktopByNumber(1)
+; ^!2::switchDesktopByNumber(2)
+; ^!3::switchDesktopByNumber(3)
+; ^!4::switchDesktopByNumber(4)
+; ^!5::switchDesktopByNumber(5)
+; ^!6::switchDesktopByNumber(6)
+; ^!7::switchDesktopByNumber(7)
+; ^!8::switchDesktopByNumber(8)
+; ^!9::switchDesktopByNumber(9)
 ;CapsLock & 1::switchDesktopByNumber(1)
 ;CapsLock & 2::switchDesktopByNumber(2)
 ;CapsLock & 3::switchDesktopByNumber(3)
@@ -441,3 +403,154 @@ MsgBox, "Exiting EP's AHK script"
 ExitApp
 return
 
+
+dllMoveCurrentWindowToDesktop(number) {
+	global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc, activeWindowByDesktop
+	WinGet, activeHwnd, ID, A
+	activeWindowByDesktop[number] := 0 ; Do not activate
+	DllCall(MoveWindowToDesktopNumberProc, UInt, activeHwnd, UInt, number)
+	DllCall(GoToDesktopNumberProc, UInt, number)
+}
+
+GoToPrevDesktop() {
+	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc
+	current := DllCall(GetCurrentDesktopNumberProc, UInt)
+	if (current = 0) {
+		GoToDesktopNumber(9)
+	} else {
+		GoToDesktopNumber(current - 1)      
+	}
+	return
+}
+
+GoToNextDesktop() {
+	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc
+	current := DllCall(GetCurrentDesktopNumberProc, UInt)
+	if (current = 7) {
+		GoToDesktopNumber(0)
+	} else {
+		GoToDesktopNumber(current + 1)    
+	}
+	return
+}
+
+GoToDesktopNumber(num) {
+    global CurrentDesktop
+ ;         MsgBox, "Going to %num%"
+	global GetCurrentDesktopNumberProc, GoToDesktopNumberProc, IsPinnedWindowProc, activeWindowByDesktop
+
+	; Store the active window of old desktop, if it is not pinned
+	WinGet, activeHwnd, ID, A
+	current := DllCall(GetCurrentDesktopNumberProc, UInt) 
+	isPinned := DllCall(IsPinnedWindowProc, UInt, activeHwnd)
+	if (isPinned == 0) {
+		activeWindowByDesktop[current] := activeHwnd
+	}
+
+	; Try to avoid flashing task bar buttons, deactivate the current window if it is not pinned
+	if (isPinned != 1) {
+		WinActivate, ahk_class Shell_TrayWnd
+	}
+
+	; Change desktop
+	DllCall(GoToDesktopNumberProc, Int, num)
+
+    CurrentDesktop := num
+
+        ApplyIcon(num)
+
+	return
+}
+
+global ep_temp
+ApplyIcon(num) {
+
+        ; MsgBox, "apply icon, num=%num%"
+        ep_temp := num+1
+        Menu, Tray, Icon, Icons/%ep_temp%-64.ico
+;        Menu, Tray, Icon, Icons/icon%ep_temp%-Black.ico
+;        Menu, Tray, Icon, Icons/icon%ep_temp%.ico
+
+}
+
+; Windows 10 desktop changes listener
+DllCall(RegisterPostMessageHookProc, Int, hwnd, Int, 0x1400 + 30)
+VWMess(wParam, lParam, msg, hwnd) {
+	global IsWindowOnCurrentVirtualDesktopProc, IsPinnedWindowProc, activeWindowByDesktop
+
+	desktopNumber := lParam + 1
+	
+        MsgBox, "On %desktopNumber%"
+
+        ; Try to restore active window from memory (if it's still on the desktop and is not pinned)
+	WinGet, activeHwnd, ID, A 
+	isPinned := DllCall(IsPinnedWindowProc, UInt, activeHwnd)
+	oldHwnd := activeWindowByDesktop[lParam]
+	isOnDesktop := DllCall(IsWindowOnCurrentVirtualDesktopProc, UInt, oldHwnd, Int)
+	if (isOnDesktop == 1 && isPinned != 1) {
+		WinActivate, ahk_id %oldHwnd%
+	}
+
+        ApplyIcon(desktopNumber)
+	
+	; When switching to desktop 1, set background pluto.jpg
+	; if (lParam == 0) {
+		; DllCall("SystemParametersInfo", UInt, 0x14, UInt, 0, Str, "C:\Users\Jarppa\Pictures\Backgrounds\saturn.jpg", UInt, 1)
+	; When switching to desktop 2, set background DeskGmail.png
+	; } else if (lParam == 1) {
+		; DllCall("SystemParametersInfo", UInt, 0x14, UInt, 0, Str, "C:\Users\Jarppa\Pictures\Backgrounds\DeskGmail.png", UInt, 1)
+	; When switching to desktop 7 or 8, set background DeskMisc.png
+	; } else if (lParam == 2 || lParam == 3) {
+		; DllCall("SystemParametersInfo", UInt, 0x14, UInt, 0, Str, "C:\Users\Jarppa\Pictures\Backgrounds\DeskMisc.png", UInt, 1)
+	; Other desktops, set background to DeskWork.png
+	; } else {
+		; DllCall("SystemParametersInfo", UInt, 0x14, UInt, 0, Str, "C:\Users\Jarppa\Pictures\Backgrounds\DeskWork.png", UInt, 1)
+	; }
+}
+OnMessage(0x1400 + 30, "VWMess")
+
+ToggleIcon(delta){
+        global CurrentDesktop
+
+        ; MsgBox, "ToggleIcon: current=%CurrentDesktop%"
+        CurrentDesktop := CurrentDesktop + delta
+    if (CurrentDesktop >  9 ) {
+        CurrentDesktop := 9
+    }
+    if ( CurrentDesktop < 0 ) {
+        CurrentDesktop := 0
+    }
+        ; MsgBox, "ep_temp=%CurrentDesktop%"
+        ApplyIcon(CurrentDesktop)        
+}
+
+; #j::GoToPrevDesktop()
+; #k::GoToNextDesktop()
+~#^Left::ToggleIcon(-1)
+~#^Right::ToggleIcon(1)
+
+
+
+; Switching desktops:
+; Win + Ctrl + 1 = Switch to desktop 1
+^!1::GoToDesktopNumber(0)
+^!2::GoToDesktopNumber(1)
+^!3::GoToDesktopNumber(2)
+^!4::GoToDesktopNumber(3)
+^!5::GoToDesktopNumber(4)
+^!6::GoToDesktopNumber(5)
+^!7::GoToDesktopNumber(6)
+^!8::GoToDesktopNumber(7)
+^!9::GoToDesktopNumber(8)
+^!0::GoToDesktopNumber(9)
+
+!#1::dllMoveCurrentWindowToDesktop(0)
+!#2::dllMoveCurrentWindowToDesktop(1)
+!#3::dllMoveCurrentWindowToDesktop(2)
+!#4::dllMoveCurrentWindowToDesktop(3)
+!#5::dllMoveCurrentWindowToDesktop(4)
+!#6::dllMoveCurrentWindowToDesktop(5)
+!#7::dllMoveCurrentWindowToDesktop(6)
+!#8::dllMoveCurrentWindowToDesktop(7)
+!#9::dllMoveCurrentWindowToDesktop(8)
+!#0::dllMoveCurrentWindowToDesktop(9)

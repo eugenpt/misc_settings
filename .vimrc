@@ -1,6 +1,27 @@
 
 inoremap jk <ESC>
 inoremap kj <ESC>
+inoremap ол <ESC>
+inoremap ло <ESC>
+inoremap <C-о> <C-j>
+inoremap <C-л> <C-k>
+inoremap <C-д> <C-l>
+nnoremap р h
+nnoremap о j
+nnoremap л k
+nnoremap д l
+nnoremap ш i
+nnoremap щ o
+nnoremap Щ O
+nnoremap в d
+nnoremap В D
+nnoremap ф a 
+nnoremap Ф A
+nnoremap у e
+nnoremap й w
+inoremap <C-ф> <C-a>
+inoremap <C-у> <C-e>
+
 
 " https://superuser.com/a/1321520
 nnoremap <silent> <C-j> :bprev<CR>                                                                            
@@ -146,7 +167,10 @@ Plug 'scrooloose/syntastic'
 " Поддержка Python
 "Plug 'klen/python-mode
 
+Plug 'puremourning/vimspector'
+Plug 'ambv/black'
 
+Plug 'pprovost/vim-ps1'
 call plug#end()
 
 
@@ -246,3 +270,17 @@ nnoremap <space><space> :nohlsearch<CR>
 
 
 set pyx=3
+
+
+" inoremap <Tab> <C-n> " thought that was convenient, but I already got used
+" to C-n
+
+
+" emacs!
+inoremap <C-p> <C-o>k
+" inoremap <C-n> <C-o>j " nope
+inoremap <C-a> <C-o>0
+inoremap <C-e> <C-o>$
+inoremap <C-b> <C-o>h
+inoremap <C-f> <C-o>l
+
