@@ -40,6 +40,7 @@
     material-theme                  ;; theme
     company-irony
     web-mode
+    evil
     )
   )
 
@@ -74,11 +75,11 @@
 (elpy-enable)
 
 ;; Use IPython for REPL
-(setq python-shell-interpreter "jupyter"
-      python-shell-interpreter-args "console --simple-prompt"
-      python-shell-prompt-detect-failure-warning nil)
-(add-to-list 'python-shell-completion-native-disabled-interpreters
-             "jupyter")
+; (setq python-shell-interpreter "jupyter"
+;       python-shell-interpreter-args "console --simple-prompt"
+;       python-shell-prompt-detect-failure-warning nil)
+; (add-to-list 'python-shell-completion-native-disabled-interpreters
+;              "jupyter")
 
 ;; Enable Flycheck
 (when (require 'flycheck nil t)
@@ -101,3 +102,5 @@
 
 
 
+(require 'evil)
+(evil-mode 0)
