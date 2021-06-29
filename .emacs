@@ -9,8 +9,8 @@
 
 
 
-(require 'simpleclip)
-
+(require 'simpleclip) 
+  
 (require 'better-defaults)
 
 (simpleclip-mode 1)
@@ -30,6 +30,7 @@
 (defvar myPackages
   '(better-defaults                 ;; set up some better emacs defaults
     elpy
+    which-key
     ein
     telega
     flycheck
@@ -84,5 +85,11 @@
 ;; Enable autopep8
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+
+;; (setq-default indent-tabs-mode nil)
+;; (setq-default tab-width 2)
+;; (setq indent-line-function 'insert-tab)
+
 
 
