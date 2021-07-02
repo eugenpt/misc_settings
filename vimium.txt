@@ -71,6 +71,8 @@ map  па nextFrame
 
 map  ь Marks.activateCreateMode
 map  ё Marks.activateGotoMode
+map  ' Marks.activateGotoMode
+map  э Marks.activateGotoMode
 
 map  <a-з> togglePinTab
 
