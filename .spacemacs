@@ -7,10 +7,15 @@
 
 (defun multiply-by-seven (number)
   "Multiply NUMBER by seven."
-  (interactive)
-  (message "number"))
+  (interactive "p")
+  (message "number is %d" (* number 7))
+  (* number 7)
+)
+
 (multiply-by-seven 3)
 
+(message "This is a test message")
+(message "This is buffer %s fill-column is %d" (buffer-name) fill-column)
 
 ;; Translate C-h to DEL
 (keyboard-translate ?\C-h ?\C-?)
