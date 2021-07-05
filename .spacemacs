@@ -27,6 +27,7 @@
 ;; (define-key evil-insert-state-map "jj" 'evil-escape)
 ;; (define-key evil-insert-state-map "jk" 'evil-escape)
 
+
 (define-key evil-normal-state-map "\C-?" 'evil-window-left)
 (define-key evil-normal-state-map "\C-l" 'evil-window-right)
 (add-hook 'git-commit-mode-hook 'evil-insert-state)
@@ -37,3 +38,30 @@
   (message "Howdie-doodie fella"))
 
 (spacemacs/set-leader-keys "C-h" 'delete-backward-char)
+
+
+(setq org-directory "~/Dropbox/org/")
+
+(add-hook 'org-capture-mode-hook 'evil-insert-state)
+
+(setq org-capture-templates
+      '(
+        ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")
+        ("i" "Idea" entry (file+datetree "~/Dropbox/org/ideas.org")
+         "* %?\nEntered on %U\n  %i")
+        ("p" "Personal Journal" entry (file+datetree "~/Dropbox/org/pjournal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")
+       )
+)
+
+;; (use-package org-brain :ensure t
+;;   :init
+;;   (setq org-brain-path "~/Dropbox/org/brain/")
+;;   )
+
+(use-package polymode
+  :config
+  (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
