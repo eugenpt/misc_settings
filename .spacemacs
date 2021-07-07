@@ -2,6 +2,8 @@
   ;; ...
   ;; Set escape keybinding to "jk"
   (setq-default evil-escape-key-sequence "jk")
+  (set-face-attribute 'default nil :height 130)
+  
  )
 (defun ep_test ())
 
@@ -31,9 +33,15 @@
 (define-key evil-normal-state-map "\C-l" 'evil-window-right)
 (add-hook 'git-commit-mode-hook 'evil-insert-state)
 
+;; https://www.reddit.com/r/emacs/comments/5qkg3q/how_to_best_adapt_to_spacemacs_evil/dd2c4eb?utm_source=share&utm_medium=web2x&context=3
+(define-key evil-normal-state-map "H" 'evil-beginning-of-line)
+(define-key evil-normal-state-map "L" 'evil-end-of-line)
+
 (defun doodlebug ()
   "Nonce function"
   (interactive)
   (message "Howdie-doodie fella"))
 
 (spacemacs/set-leader-keys "C-h" 'delete-backward-char)
+
+
