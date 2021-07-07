@@ -67,6 +67,9 @@
 ;;   (setq org-brain-path "~/Dropbox/org/brain/")
 ;;   )
 
-(use-package polymode
-  :config
-  (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
+;; (use-package polymode
+;;   :config
+;;   (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
+
+(global-display-line-numbers-mode)
+(display-line-numbers--turn-on)
