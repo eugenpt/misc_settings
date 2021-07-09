@@ -54,17 +54,17 @@
 (setq org-directory "~/Dropbox/org/")
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
-
+;; test
 (setq org-capture-templates
       '(
         ("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")
+         "* TODO %?\n  %i\nEntered on %U\n  %i\n From: %a")
         ("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
+         "* %?\nEntered on %U\n  %i\n From: %a")
         ("i" "Idea" entry (file+datetree "~/Dropbox/org/ideas.org")
-         "* %?\nEntered on %U\n  %i")
+         "* %?\nEntered on %U\n  %i\n From: %a")
         ("p" "Personal Journal" entry (file+datetree "~/Dropbox/org/pjournal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
+         "* %?\nEntered on %U\n  %i\n From: %a")
        )
 )
 
