@@ -65,9 +65,11 @@
          "* %?\nEntered on %U\n  %i\n From: %a")
         ("p" "Personal Journal" entry (file+datetree "~/Dropbox/org/pjournal.org")
          "* %?\nEntered on %U\n  %i\n From: %a")
+        ("b" "list of things to buy" checkitem (file "~/Dropbox/org/tobuy.org")
+         "[ ] %? (created %T)")
        )
 )
-
+(setq org-agenda-files (directory-files-recursively "~/Dropbox/org/" "\\.org$"))
 ;; (use-package org-brain :ensure t
 ;;   :init
 ;;   (setq org-brain-path "~/Dropbox/org/brain/")
@@ -79,3 +81,7 @@
 
 (global-display-line-numbers-mode)
 (display-line-numbers--turn-on)
+
+
+
+(message "EP's config file loaded successfully.")
