@@ -83,5 +83,21 @@
 (display-line-numbers--turn-on)
 
 
+(setq org-ref-default-bibliography '("~/Dropbox/org/Science/bibliography.bib")
+      org-ref-bibliography-notes "~/Dropbox/Science/bibliography-notes.org")
+
+;; (add-to-list 'org-latex-classes '("apa6" "\\documentclass{apa6}" ))
+;; org-latex-classes
+
+
+
+(add-to-list 'org-latex-classes
+                '("apa6"
+                  "\\documentclass{apa6}"
+                  ("\\section{%s}" . "\\section*{%s}")
+                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 (message "EP's config file loaded successfully.")
