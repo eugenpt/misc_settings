@@ -1,6 +1,7 @@
 # Insert your preferred key mappings here.
 map  , showHelp
-map  о scrollDown
+# map  о scrollDown
+map  <c-о> scrollDown
 map  л scrollUp
 map  р scrollLeft
 map  д scrollRight
@@ -66,6 +67,16 @@ map  Е Vomnibar.activateTabSelection
 
 map  и Vomnibar.activateBookmarks
 map  И Vomnibar.activateBookmarksInNewTab
+
+map D closeTabsOnRight
+map В closeTabsOnRight
+map d$ closeTabsOnRight
+map в; closeTabsOnRight
+
+map d0 closeTabsOnLeft
+map в0 closeTabsOnLeft
+map d^ closeTabsOnLeft
+map в: closeTabsOnLeft
 
 map  па nextFrame
 
