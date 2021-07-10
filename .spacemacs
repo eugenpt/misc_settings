@@ -81,6 +81,7 @@
 
 (global-display-line-numbers-mode)
 (display-line-numbers--turn-on)
+(display-line-numbers-mode t)
 
 
 (setq org-ref-default-bibliography '("~/Dropbox/org/Science/bibliography.bib")
