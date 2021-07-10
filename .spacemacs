@@ -66,7 +66,7 @@
         ("p" "Personal Journal" entry (file+datetree "~/Dropbox/org/pjournal.org")
          "* %?\nEntered on %U\n  %i\n From: %a")
         ("b" "list of things to buy" checkitem (file "~/Dropbox/org/tobuy.org")
-         "[ ] %? (created %T)")
+         "[ ] %? (created %U)")
        )
 )
 (setq org-agenda-files (directory-files-recursively "~/Dropbox/org/" "\\.org$"))
