@@ -75,7 +75,64 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+;;
+;; The doom way
+(map! :ie "C-h" #'backward-delete-char-untabify)
+(map! :after evil-org
+        :map evil-org-mode-map
+        :i "C-h" #'backward-delete-char-untabify)
+(map! (:map (minibuffer-local-map
+             minibuffer-local-ns-map
+             minibuffer-local-completion-map
+             minibuffer-local-must-match-map
+             minibuffer-local-isearch-map
+             read-expression-map)
+        "C-h" #'backward-delete-char-untabify)
+
+      (:after evil
+        :map evil-ex-completion-map
+        "C-h" #'backward-delete-char-untabify)
+
+      ;; If you use :completion ivy
+      (:after ivy
+        :map ivy-minibuffer-map
+        "C-h" #'backward-delete-char-untabify)
+
+      ;; If you use :completion helm
+      (:after helm
+        :map helm-map
+        "C-h" #'backward-delete-char-untabify))
 
 
+;; ehm.. new capture tamplates.. ?
+
+
+(after! org (
+add-to-list 'org-capture-templates
+        '("t" "Todo" entry (file+headline "~/Dropbox/org/gtd.org" "Tasks")
+         "* TODO %?\n  %i\nEntered on %U\n  %i\n From: %a")
+))
+(after! org (
+add-to-list 'org-capture-templates
+'("j" "Journal" entry (file+datetree "~/Dropbox/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n From: %a")
+))
+(after! org (
+add-to-list 'org-capture-templates
+        '("i" "Idea" entry (file+datetree "~/Dropbox/org/ideas.org")
+         "* %?\nEntered on %U\n  %i\n From: %a")
+))
+(after! org (
+add-to-list 'org-capture-templates
+        '("l" "Persona_l_ Journal" entry (file+datetree "~/Dropbox/org/journalp.org")
+         "* %?\nEntered on %U\n  %i\n From: %a")
+))
+(after! org (
+add-to-list 'org-capture-templates
+        '("b" "list of things to buy" checkitem (file "~/Dropbox/org/tobuy.org")
+         "[ ] %? (created %U)")
+        ))
+
+(setq default-input-method "russian-computer")
 
 ;;; .doom.el ends here
