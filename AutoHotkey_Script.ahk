@@ -1,4 +1,6 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿; ! = Win ^ = Ctrl # = Alt?
+
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 ; SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -291,6 +293,7 @@ ep_open_taskBar(number){
 	CoordMode, Mouse, Screen
 	MouseGetPos, xpos, ypos 
 	MouseMove, 94 + 62*number , 1416, 0
+;	MouseMove, 71 + 50*number , 1132, 0
 	Click
 	MouseMove, %xpos%, %ypos%, 0
 		
