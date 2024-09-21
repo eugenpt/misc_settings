@@ -352,12 +352,23 @@ OnDesktopSwitch(n:=1) {
 ;EP
 ; Function to add a new desktop to the history
 AddDesktopToHistory(desktopName) {
-    global desktopHistory, currentIndex
-    ; Add the desktop name to the array
-    desktopHistory.push(desktopName)
-    ; Set the current index to the latest desktop
-    currentIndex := desktopHistory.MaxIndex()
+	global desktopHistory, currentIndex
+	curIx := currentIndex
+	curDesk := desktopHistory[currentIndex]
+	ToolTip, cur=%curDesk% new=%desktopName%
+	if ( curDesk <> desktopName) {
+		; Add the desktop name to the array
+		desktopHistory.push(desktopName)
+		; Set the current index to the latest desktop
+		currentIndex := desktopHistory.MaxIndex()
+	}
+	SetTimer, NoToolTip, -300
 }
+
+NoToolTip(){
+	ToolTip
+}
+
 SwitchToDesktopNoHistory(n:=1) {
     doFocusAfterNextSwitch=1
     _ChangeDesktop(n)
