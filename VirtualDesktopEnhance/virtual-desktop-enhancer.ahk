@@ -336,7 +336,7 @@ OnDesktopSwitch(n:=1) {
         _ShowTooltipForDesktopSwitch(n)
     }
     _ChangeAppearance(n)
-    _ChangeBackground(n)
+    ; _ChangeBackground(n)
 
     if (previousDesktopNo) {
         _RunProgramWhenSwitchingFromDesktop(previousDesktopNo)
@@ -351,17 +351,35 @@ OnDesktopSwitch(n:=1) {
 
 ;EP
 ; Function to add a new desktop to the history
+
 AddDesktopToHistory(desktopName) {
 	global desktopHistory, currentIndex
-	curIx := currentIndex
-	curDesk := desktopHistory[currentIndex]
-	ToolTip, cur=%curDesk% new=%desktopName%
-	if ( curDesk <> desktopName) {
-		; Add the desktop name to the array
-		desktopHistory.push(desktopName)
-		; Set the current index to the latest desktop
+	if (currentIndex = 0 ) {
+		desktopHistory.push(desktopName) 
 		currentIndex := desktopHistory.MaxIndex()
+	} else if (currentIndex = 1) {
+		if (desktopHistory.MaxIndex() = 1){
+			desktopHistory.push(desktopName)
+			currentIndex := desktopHistory.MaxIndex()
+		} else {
+			currentIndex := desktopHistory.MaxIndex()
+			desktopHistory[2] := desktopName
+		}
+	} else if (currentIndex = 2) {
+		desktopHistory[1] := desktopHistory[2]
+		desktopHistory[2] := desktopName
 	}
+
+;  Ive decided to only keep two
+;	curIx := currentIndex
+;	curDesk := desktopHistory[currentIndex]
+;	ToolTip, cur=%curDesk% new=%desktopName%
+;	if ( curDesk <> desktopName) {
+;		; Add the desktop name to the array
+;		desktopHistory.push(desktopName)
+;		; Set the current index to the latest desktop
+;		currentIndex := desktopHistory.MaxIndex()
+;	}
 	SetTimer, NoToolTip, -300
 }
 
@@ -407,7 +425,7 @@ ChangeDesktopName() {
     if (ErrorLevel == 0) {
         _SetDesktopName(currentDesktopNumber, newDesktopName)
     }
-    _ChangeAppearance(currentDesktopNumber)
+    ; _ChangeAppearance(currentDesktopNumber)
 }
 
 Reload() {
@@ -978,3 +996,47 @@ XButton2::
 	global isForced1, lastBeforeForced1
 	isForced1 := !isForced1
 return
+
+
+
+global isLogging := false
+global lastKey := ""
+
+^F9::  ; Ctrl+F9 to toggle logging
+    isLogging := !isLogging
+    if (isLogging) {
+        ShowToolTip("Keypress logging: ON", 1000)
+    } else {
+        ShowToolTip("Keypress logging: OFF", 1000)
+    }
+return
+
+#If isLogging
+~*::  ; Capture all keys when logging is enabled
+    if (A_PriorHotkey != A_ThisHotkey || A_TimeSincePriorHotkey > 50) {
+        thisKey := GetKeyName(A_ThisHotkey)
+        if (thisKey != lastKey) {  ; Prevent duplicate notifications
+            ShowToolTip(thisKey)
+            lastKey := thisKey
+        }
+    }
+return
+#If
+
+ShowToolTip(text, timeout := 750) {
+    ToolTip, %text%
+    SetTimer, RemoveToolTip, -%timeout%
+}
+
+RemoveToolTip:
+    ToolTip
+return
+
+
+#If   ; <-- reset any context above
+; Layout-independent (OEM comma/period)
+^vkBC::Send, {Home}   ; Ctrl + physical comma
+^vkBE::Send, {End}    ; Ctrl + physical period
+
+^+vkBC::Send, +{Home}   ; Ctrl+Shift+comma → Shift+Home
+^+vkBE::Send, +{End}    ; Ctrl+Shift+period → Shift+End
